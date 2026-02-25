@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberShield - Phishing URL & Email Detection</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2300ff88'/><stop offset='100%25' stop-color='%2300d4ff'/></linearGradient></defs><path d='M16 2L4 8v8c0 7.73 5.12 14.95 12 16.5 6.88-1.55 12-8.77 12-16.5V8L16 2zm0 4l8 4v6c0 5.55-3.43 10.74-8 12.19-4.57-1.45-8-6.64-8-12.19v-6l8-4z' fill='url(%23g)'/><path d='M14 17l-4-4 1.41-1.41L14 14.17l6.59-6.59L22 9l-8 8z' fill='%230a0e17'/></svg>" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="bg-animation">
+    <div class="particles" id="particles"></div>
+    <div class="scanlines"></div>
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <span class="logo-icon">🛡️</span>
+        <span class="logo-text">CyberShield</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#analyzer" class="nav-link">Analyzer</a></li>
+        <li><a href="#database" class="nav-link">Threat DB</a></li>
+        <li><a href="#stats" class="nav-link">Statistics</a></li>
+      </ul>
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        <span class="status-text">System Active</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-icon">⚡</span>
+          <span>Real-Time Protection</span>
+        </div>
+        <h1 class="hero-title">
+          <span class="title-line">Phishing URL</span>
+          <span class="title-highlight">& Email Detection</span>
+        </h1>
+        <p class="hero-description">
+          Advanced AI-powered system that detects phishing attempts in real-time. 
+          Analyze suspicious URLs and emails instantly to protect yourself from cyber threats.
+        </p>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="stat-value" id="totalAnalyzed">0</span>
+            <span class="stat-label">URLs Analyzed</span>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-value" id="threatsBlocked">0</span>
+            <span class="stat-label">Threats Blocked</span>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-value">0</span>
+            <span class="stat-label">Detection Rate</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Analyzer Section -->
+    <section class="analyzer-section" id="analyzer">
+      <div class="section-header">
+        <h2 class="section-title">Threat Analyzer</h2>
+        <p class="section-subtitle">Enter a URL or email to analyze for potential phishing threats</p>
+      </div>
+
+      <div class="analyzer-tabs">
+        <button class="tab-btn active" data-tab="url">
+          <span class="tab-icon">🔗</span>
+          <span>URL Analysis</span>
+        </button>
+        <button class="tab-btn" data-tab="email">
+          <span class="tab-icon">📧</span>
+          <span>Email Analysis</span>
+        </button>
+      </div>
+
+      <!-- URL Analyzer -->
+      <div class="analyzer-panel active" id="url-panel">
+        <div class="input-group">
+          <div class="input-wrapper">
+            <span class="input-icon">🌐</span>
+            <input 
+              type="text" 
+              id="urlInput" 
+              class="analyzer-input" 
+              placeholder="Enter URL to analyze (e.g., http://suspicious-site.com/login)"
+              autocomplete="off"
+            >
+            <div class="input-glow"></div>
+          </div>
+          <button class="analyze-btn" id="analyzeUrlBtn">
+            <span class="btn-text">Analyze URL</span>
+            <span class="btn-icon">→</span>
+          </button>
+        </div>
+        <div class="quick-links">
+          <span class="quick-label">Try these:</span>
+          <button class="quick-btn" data-url="http://secure-bank-login.com/account">Phishing Demo</button>
+          <button class="quick-btn" data-url="http://paypal-verify.net/login">Paypal Scam</button>
+          <button class="quick-btn" data-url="https://google.com">Safe Site</button>
+        </div>
+      </div>
+
+      <!-- Email Analyzer -->
+      <div class="analyzer-panel" id="email-panel">
+        <div class="email-inputs">
+          <div class="input-group vertical">
+            <label class="input-label">Sender Address</label>
+            <div class="input-wrapper">
+              <span class="input-icon">👤</span>
+              <input 
+                type="text" 
+                id="senderInput" 
+                class="analyzer-input" 
+                placeholder="sender@email.com"
+                autocomplete="off"
+              >
+            </div>
+          </div>
+          <div class="input-group vertical">
+            <label class="input-label">Email Subject (Optional)</label>
+            <div class="input-wrapper">
+              <span class="input-icon">📝</span>
+              <input 
+                type="text" 
+                id="subjectInput" 
+                class="analyzer-input" 
+                placeholder="Email subject"
+                autocomplete="off"
+              >
+            </div>
+          </div>
+          <div class="input-group vertical">
+            <label class="input-label">Email Body (Optional)</label>
+            <div class="input-wrapper">
+              <textarea 
+                id="emailBodyInput" 
+                class="analyzer-textarea" 
+                placeholder="Paste email content here..."
+                rows="4"
+              ></textarea>
+            </div>
+          </div>
+          <button class="analyze-btn" id="analyzeEmailBtn">
+            <span class="btn-text">Analyze Email</span>
+            <span class="btn-icon">→</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Results Section -->
+      <div class="results-container" id="resultsContainer">
+        <!-- Loading State -->
+        <div class="result-loading" id="resultLoading" style="display: none;">
+          <div class="loading-scanner">
+            <div class="scanner-line"></div>
+            <div class="scanner-ring"></div>
+          </div>
+          <p class="loading-text">Analyzing<span class="loading-dots"></span></p>
+        </div>
+
+        <!-- Result Card -->
+        <div class="result-card" id="resultCard" style="display: none;">
+          <div class="result-header">
+            <div class="threat-level" id="threatLevel">
+              <span class="threat-icon"></span>
+              <span class="threat-label"></span>
+            </div>
+            <div class="risk-score" id="riskScore">
+              <span class="score-value">0</span>
+              <span class="score-label">Risk Score</span>
+            </div>
+          </div>
+
+          <div class="result-content">
+            <div class="result-analyzed">
+              <span class="analyzed-label">Analyzed:</span>
+              <span class="analyzed-value" id="analyzedContent"></span>
+            </div>
+
+            <div class="analysis-checks" id="analysisChecks">
+            </div>
+
+            <div class="result-recommendation" id="resultRecommendation">
+            </div>
+          </div>
+
+          <div class="result-actions">
+            <button class="action-btn primary" id="newAnalysisBtn">
+              <span>🔄</span> New Analysis
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Threat Database Section -->
+    <section class="database-section" id="database">
+      <div class="section-header">
+        <h2 class="section-title">Threat Database</h2>
+        <p class="section-subtitle">View and search known phishing threats in our database</p>
+      </div>
+
+      <div class="db-controls">
+        <div class="filter-group">
+          <select class="filter-select" id="filterType">
+            <option value="">All Types</option>
+            <option value="url">URLs</option>
+            <option value="email">Emails</option>
+          </select>
+          <select class="filter-select" id="filterThreat">
+            <option value="">All Threat Levels</option>
+            <option value="dangerous">Dangerous</option>
+            <option value="suspicious">Suspicious</option>
+            <option value="safe">Safe</option>
+          </select>
+        </div>
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" id="dbSearch" placeholder="Search threats...">
+        </div>
+      </div>
+
+      <div class="db-table-container">
+        <table class="db-table" id="threatTable">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Content</th>
+              <th>Threat Level</th>
+              <th>Risk Score</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="threatTableBody">
+          </tbody>
+        </table>
+      </div>
+
+      <div class="db-pagination" id="dbPagination">
+      </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats-section" id="stats">
+      <div class="section-header">
+        <h2 class="section-title">Security Statistics</h2>
+        <p class="section-subtitle">Real-time threat detection metrics and trends</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-card-icon">🎯</span>
+            <span class="stat-card-title">Today's Activity</span>
+          </div>
+          <div class="stat-card-value" id="todayTotal">0</div>
+          <div class="stat-card-label">URLs Analyzed</div>
+          <div class="stat-trend up">
+            <span>↑ 12%</span> vs yesterday
+          </div>
+        </div>
+
+        <div class="stat-card danger">
+          <div class="stat-card-header">
+            <span class="stat-card-icon">⚠️</span>
+            <span class="stat-card-title">Threats Detected</span>
+          </div>
+          <div class="stat-card-value" id="todayThreats">0</div>
+          <div class="stat-card-label">In Last 24 Hours</div>
+          <div class="stat-trend down">
+            <span>↓ 5%</span> vs yesterday
+          </div>
+        </div>
+
+        <div class="stat-card safe">
+          <div class="stat-card-header">
+            <span class="stat-card-icon">✅</span>
+            <span class="stat-card-title">Safe Results</span>
+          </div>
+          <div class="stat-card-value" id="todaySafe">0</div>
+          <div class="stat-card-label">Verified Safe</div>
+          <div class="stat-trend up">
+            <span>↑ 8%</span> vs yesterday
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-card-icon">📊</span>
+            <span class="stat-card-title">7-Day Trend</span>
+          </div>
+          <div class="chart-container" id="trendChart">
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <span class="logo-icon">🛡️</span>
+        <span>CyberShield</span>
+      </div>
+      <div class="footer-links">
+        <a href="#analyzer">Analyzer</a>
+        <a href="#database">Threat DB</a>
+        <a href="#stats">Statistics</a>
+      </div>
+      <div class="footer-copy">
+        © 2024 CyberShield. All rights reserved. Stay safe online.<br>
+      Built by SONU KUMAR UPADHYAY for Phishing URL & Email Detection.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <span class="toast-icon"></span>
+    <span class="toast-message"></span>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
